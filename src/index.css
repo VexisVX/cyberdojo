@@ -1,0 +1,186 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ========== ROOT VARIABLES (overridden by JS) ========== */
+:root {
+  --bg-deepest: #0a0e1a;
+  --bg-base: #11151f;
+  --bg-raised: #1a1f2e;
+  --bg-overlay: #232838;
+  --border-subtle: rgba(255,255,255,0.04);
+  --border-default: rgba(255,255,255,0.08);
+  --border-strong: rgba(255,255,255,0.14);
+  --text-primary: #e2e8f0;
+  --text-secondary: #b4bcc9;
+  --text-muted: #8b95a8;
+  --text-subtle: #5a6478;
+  --accent-cyan: #00d4ff;
+  --accent-violet: #a78bfa;
+  --accent-emerald: #34d399;
+  --accent-rose: #fb7185;
+  --accent-amber: #fbbf24;
+  --glow-cyan: rgba(0, 212, 255, 0.35);
+  --glow-violet: rgba(167, 139, 250, 0.35);
+  --glow-emerald: rgba(52, 211, 153, 0.35);
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg-deepest);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ========== SCROLLBAR ========== */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--bg-overlay);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--text-subtle); }
+
+/* ========== TYPOGRAPHY ========== */
+h1, h2, h3, h4 { letter-spacing: -0.02em; }
+h1 { letter-spacing: -0.03em; }
+
+/* ========== NEON TEXT ========== */
+.text-neon {
+  color: var(--accent-cyan);
+  text-shadow: 0 0 24px var(--glow-cyan);
+}
+
+/* ========== GLASS CARD ========== */
+.glass-card {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.01) 100%
+  );
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid var(--border-default);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.glass-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    500px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(0, 212, 255, 0.08),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.glass-card:hover::before {
+  opacity: 1;
+}
+
+.glass-card:hover {
+  border-color: var(--border-strong);
+  box-shadow:
+    0 0 0 1px var(--glow-cyan),
+    0 12px 40px -8px rgba(0, 0, 0, 0.5);
+}
+
+/* Light theme adjustment */
+:root[style*="--bg-deepest: #f8fafc"] .glass-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.6) 100%);
+}
+
+/* ========== GRID BOUNDED (subtle) ========== */
+.grid-bounded {
+  position: relative;
+  isolation: isolate;
+}
+
+.grid-bounded::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border-subtle) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
+  background-size: 40px 40px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 90%);
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 90%);
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.5;
+}
+
+/* ========== SOFT BG ========== */
+.bg-soft {
+  background:
+    radial-gradient(ellipse 800px 500px at 15% 0%, var(--glow-cyan), transparent 60%),
+    radial-gradient(ellipse 800px 500px at 85% 100%, var(--glow-violet), transparent 60%),
+    var(--bg-deepest);
+  background-attachment: fixed;
+}
+
+.bg-soft::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 1200px 800px at 50% 50%,
+    transparent 40%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ========== SIDEBAR ========== */
+.sidebar-bg {
+  background: var(--bg-base);
+  border-right: 1px solid var(--border-default);
+}
+
+/* ========== TOPBAR ========== */
+.topbar-bg {
+  background: color-mix(in srgb, var(--bg-base) 80%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-default);
+}
+
+/* ========== FOCUS RING ========== */
+:focus-visible {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ========== XTERM ========== */
+.xterm { padding: 4px; height: 100%; }
+.xterm-screen { height: 100% !important; }
+.xterm .xterm-viewport { background-color: transparent !important; }
+
+/* ========== SELECTION ========== */
+::selection {
+  background: var(--glow-cyan);
+  color: var(--bg-deepest);
+}

@@ -1,0 +1,32 @@
+[package]
+name = "cyberdojo"
+version = "0.1.0"
+description = "A Tauri App"
+authors = ["you"]
+edition = "2021"
+
+[lib]
+name = "cyberdojo_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+portable-pty = "0.8"
+uuid = { version = "1", features = ["v4"] }
+
+tauri = { version = "2", features = [] }
+tauri-plugin-opener = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[profile.dev]
+opt-level = 0
+debug = false
+incremental = true
+codegen-units = 256
+
+[profile.dev.package."*"]
+opt-level = 0
+debug = false
